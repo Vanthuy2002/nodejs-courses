@@ -5,7 +5,7 @@ const path = require('path');
 const port = 3456;
 const app = express();
 // http logger
-app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
 
 //static files
 app.use(express.static('public'));
@@ -17,12 +17,16 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources/views'));
 
-app.get('/', (req, res) => {
-  res.render('home');
+app.get('/', (request, response) => {
+  response.render('home');
 });
 
-app.get('/news', (rep, res) => {
-  res.render('news');
+app.get('/news', (request, response) => {
+  response.render('news');
+});
+
+app.get('/search', (request, response) => {
+  response.render('search');
 });
 
 app.listen(port);
