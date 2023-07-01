@@ -7,6 +7,7 @@ const app = express();
 const fs = require('fs');
 const fsProMises = require('fs').promises;
 const routing = require('./routes');
+const { connectDb } = require('./config/db');
 
 // http logger
 // app.use(morgan('tiny'));
@@ -22,7 +23,7 @@ app.use(express.json());
 const hbs = exphbs.create({ extname: 'hbs' });
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources/views'));
+app.set('views', path.join(__dirname, 'resources', 'views'));
 
 const fileOps = async () => {
   try {
@@ -52,5 +53,6 @@ fileOps();
 
 // routes init
 routing(app);
+connectDb();
 
 app.listen(PORT);
