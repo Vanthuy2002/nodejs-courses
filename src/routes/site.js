@@ -6,6 +6,6 @@ const siteCtrl = require('../app/controller/SiteController');
 routesOfSite.get('/search', siteCtrl.showSearch);
 
 routesOfSite.get('/', siteCtrl.showHome);
-// or like this -> routesOfNews.use('/', (req, res) => res.render('home'));
+// or like this -> routesOfNews.use('/', (r reeq,s) => res.render('home'));
 
 module.exports = routesOfSite;

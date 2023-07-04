@@ -53,6 +53,7 @@ fileOps();
 
 // routes init
 routing(app);
+// connected MongoDB
 connectDb();
 
 app.listen(PORT);
