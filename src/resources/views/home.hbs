@@ -1,29 +1,31 @@
-<div class='flex justify-center my-5 gap-5'>
-  {{#each data}}
-    <div class='max-w-sm bg-white border border-gray-200 rounded-lg shadow'>
-      <a href='/courses/{{this.slug}}'>
-        <img
-          style='height: 200px;width: 100%;object-fit : cover'
-          ;
-          class='rounded-t-lg'
-          src='{{this.img}}'
-          alt='{{this.name}}'
-        />
-      </a>
-      <div class='p-5'>
-        <a href='/courses/{{this.slug}}'>
-          <h5
-            class='mb-2 text-2xl font-bold tracking-tight text-gray-900'
-          >{{this.name}}</h5>
+<section class='max-w-3xl mx-auto'>
+  <div class='grid grid-cols-2 my-5 gap-3'>
+    {{#each data}}
+      <div class='max-w-sm bg-white border border-gray-200 rounded-lg shadow'>
+        <a href='/courses/{{this.slug}}?id={{this._id}}'>
+          <img
+            style='height: 200px;width: 100%;object-fit : cover'
+            ;
+            class='rounded-t-lg'
+            src='{{this.img}}'
+            alt='{{this.name}}'
+          />
         </a>
-        <p class='mb-3 font-normal text-gray-700'>{{this.desc}}</p>
-        <a
-          href='/courses/{{this.slug}}'
-          class='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300'
-        >
-          Read more
-        </a>
+        <div class='p-5'>
+          <a href='/courses/{{this.slug}}?id={{this._id}}'>
+            <h5
+              class='mb-2 text-2xl font-bold tracking-tight text-gray-900'
+            >{{this.name}}</h5>
+          </a>
+          <p class='mb-3 font-normal text-gray-700'>{{this.desc}}</p>
+          <a
+            href='/courses/{{this.slug}}?id={{this._id}}'
+            class='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300'
+          >
+            Read more
+          </a>
+        </div>
       </div>
-    </div>
-  {{/each}}
-</div>
+    {{/each}}
+  </div>
+</section>

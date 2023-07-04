@@ -1,0 +1,47 @@
+<section class='container'>
+  <form method='post' action='/courses/store' class='form'>
+    <div class='grid gap-6 mb-6 md:grid-cols-1'>
+      <div>
+        <label
+          for='name'
+          class='block mb-2 text-sm font-medium text-gray-900'
+        >Name Course</label>
+        <input
+          type='text'
+          id='name'
+          name='name'
+          class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+          placeholder='Enter course name...'
+        />
+      </div>
+      <div>
+        <label
+          for='desc'
+          class='block mb-2 text-sm font-medium text-gray-900'
+        >Description</label>
+        <input
+          type='text'
+          id='desc'
+          name='desc'
+          class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+          placeholder='Description course...'
+        />
+      </div>
+      <div>
+        <label
+          for='img'
+          class='block mb-2 text-sm font-medium text-gray-900'
+        >Thumbail</label>
+        <input
+          id='img'
+          name='img'
+          class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+          placeholder='Url thumbail...'
+        />
+      </div>
+    </div>
+    <button
+      class='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center'
+    >Create Course</button>
+  </form>
+</section>
