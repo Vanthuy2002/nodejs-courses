@@ -1,16 +1,14 @@
-const exphbs = require('express-handlebars');
 const express = require('express');
+const app = express();
+const exphbs = require('express-handlebars');
+const PORT = 3456;
+const methodOverride = require('method-override');
 const morgan = require('morgan');
 const path = require('path');
-const PORT = 3456;
-const app = express();
 const fs = require('fs');
 const fsProMises = require('fs').promises;
 const routing = require('./routes');
 const { connectDb } = require('./config/db');
-
-// http logger
-// app.use(morgan('tiny'));
 
 //static files
 app.use(express.static('public'));
@@ -19,8 +17,14 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// override method
+app.use(methodOverride('_method'));
+
 //template enginer
-const hbs = exphbs.create({ extname: 'hbs' });
+const hbs = exphbs.create({
+  extname: 'hbs',
+  helpers: { sumIndex: (a, b) => a + b },
+});
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));

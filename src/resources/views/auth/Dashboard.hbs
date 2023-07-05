@@ -1,0 +1,75 @@
+<div class='max-w-5xl mx-auto my-10'>
+  <div class='relative overflow-x-auto shadow-md sm:rounded-lg'>
+    <table class='w-full text-sm text-left text-gray-500'>
+      <caption
+        class='p-5 text-lg font-semibold text-left text-gray-900 bg-white'
+      >
+        My Courses
+      </caption>
+      <thead class='text-xs text-gray-700 uppercase bg-gray-50'>
+        <tr>
+          <th scope='col' class='px-6 py-3'>
+            #
+          </th>
+          <th scope='col' class='px-6 py-3'>
+            ID
+          </th>
+          <th scope='col' class='px-6 py-3'>
+            Name
+          </th>
+          <th scope='col' class='px-6 py-3'>
+            Image
+          </th>
+          <th scope='col' class='px-6 py-3'>
+            CreateAt
+          </th>
+          <th scope='col' class='px-6 py-3'>
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each coursesData}}
+          <tr class='bg-white border-b hover:bg-gray-200'>
+            <td
+              scope='row'
+              class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'
+            >
+              {{sumIndex @index 1}}
+            </td>
+            <td class='px-6 py-4'>
+              {{this._id}}
+            </td>
+            <td class='px-6 py-4'>
+              <a href='/courses/{{this.slug}}?id={{this._id}}'>
+                {{this.name}}
+              </a>
+            </td>
+            <td class='px-6 py-4'>
+              <img
+                src='{{this.img}}'
+                class='h-8 w-8 object-fit rounded-full'
+                alt='{{this.name}}'
+              />
+            </td>
+            <td class='px-6 py-4'>
+              {{this.createdAt}}
+            </td>
+            <td class='px-6 py-4'>
+              <div class='flex items-center gap-3'>
+                <a
+                  href='/courses/{{this._id}}/update'
+                  class='font-medium text-blue-600 px-4 py-2 bg-blue-500 text-white rounded-md'
+                >Edit</a>
+                <button
+                  class='font-medium text-blue-600 px-4 py-2 bg-red-500 text-white rounded-md'
+                >Remove</button>
+              </div>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+</div>

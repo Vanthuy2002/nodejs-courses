@@ -1,27 +1,70 @@
-<nav class='bg-white border-gray-200'>
+<nav class='bg-white border-gray-200 dark:bg-gray-900'>
   <div
     class='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'
   >
     <a href='/' class='flex items-center'>
       <img
         src='/img/avatar.jpg'
-        class='h-10 mr-3 w-10 object-cover rounded-full'
-        alt='avatar'
+        class='h-10 w-10 mr-3 object-fit rounded-full'
+        alt='Flowbite Logo'
       />
       <span
-        class='self-center text-2xl font-medium whitespace-nowrap'
-      >Education</span>
+        class='self-center text-2xl font-semibold whitespace-nowrap dark:text-white'
+      >Blogging</span>
     </a>
-    <div class='flex md:order-2'>
+    <div class='flex items-center md:order-2'>
       <button
         type='button'
-        class='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0'
-      >Get started</button>
+        class='flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300'
+        id='user-menu-button'
+        aria-expanded='false'
+        data-dropdown-toggle='user-dropdown'
+        data-dropdown-placement='bottom'
+      >
+        <span class='sr-only'>Open user menu</span>
+        <img
+          class='h-10 w-10 object-fit rounded-full'
+          src='/img/idol.jpg'
+          alt='user photo'
+        />
+      </button>
+      <div
+        class='z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow'
+        id='user-dropdown'
+      >
+        <div class='px-4 py-3'>
+          <span class='block text-sm text-gray-900 dark:text-white'>Emi Fukuda</span>
+          <span
+            class='block text-sm text-gray-500 truncate dark:text-gray-400'
+          >vanthuy101102@gmail.com</span>
+        </div>
+        <ul class='py-2' aria-labelledby='user-menu-button'>
+          <li>
+            <a
+              href='/me/dashboard'
+              class='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+            >Dashboard</a>
+          </li>
+
+          <li>
+            <a
+              href='/courses/create'
+              class='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+            >Add Post</a>
+          </li>
+          <li>
+            <a
+              href='#'
+              class='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+            >Sign out</a>
+          </li>
+        </ul>
+      </div>
       <button
-        data-collapse-toggle='navbar-cta'
+        data-collapse-toggle='mobile-menu-2'
         type='button'
-        class='inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200'
-        aria-controls='navbar-cta'
+        class='inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200'
+        aria-controls='mobile-menu-2'
         aria-expanded='false'
       >
         <span class='sr-only'>Open main menu</span>
@@ -40,10 +83,10 @@
     </div>
     <div
       class='items-center justify-between hidden w-full md:flex md:w-auto md:order-1'
-      id='navbar-cta'
+      id='mobile-menu-2'
     >
       <ul
-        class='flex flex-col items-center font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white'
+        class='flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white'
       >
         <li>
           <a
@@ -53,34 +96,10 @@
           >Home</a>
         </li>
         <li>
-          <button
-            id='dropdownDefaultButton'
-            data-dropdown-toggle='dropdown'
-            class='text-white bg-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center'
-          >Action</button>
-          <div
-            id='dropdown'
-            class='z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44'
-          >
-            <ul
-              class='py-2 text-sm text-gray-700'
-              aria-labelledby='dropdownDefaultButton'
-            >
-              <li>
-                <a
-                  href='/courses/create'
-                  class='block px-4 py-2 hover:bg-gray-100'
-                >Add Course</a>
-              </li>
-              <li>
-                <a
-                  href='/courses/update'
-                  class='block px-4 py-2 hover:bg-gray-100'
-                >Update Course</a>
-              </li>
-            </ul>
-          </div>
-
+          <a
+            href='#!'
+            class='block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0'
+          >Contact</a>
         </li>
       </ul>
     </div>

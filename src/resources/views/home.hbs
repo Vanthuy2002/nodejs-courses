@@ -1,7 +1,11 @@
-<section class='max-w-3xl mx-auto'>
-  <div class='grid grid-cols-2 my-5 gap-3'>
+<section class='max-w-6xl mx-auto px-4'>
+  <div
+    class='grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 max-sm:mx-auto my-5 gap-3'
+  >
     {{#each data}}
-      <div class='max-w-sm bg-white border border-gray-200 rounded-lg shadow'>
+      <div
+        class='lg:max-w-sm bg-white border border-gray-200 rounded-lg shadow'
+      >
         <a href='/courses/{{this.slug}}?id={{this._id}}'>
           <img
             style='height: 200px;width: 100%;object-fit : cover'
