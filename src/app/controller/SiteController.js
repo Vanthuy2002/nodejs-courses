@@ -1,8 +1,8 @@
 const myCourses = require('../../model/courses');
-const { mutilMongooseObject } = require('../../utils/mogooseConfig');
 class SiteController {
   // render home page
   // render -> params 2 -> valid with object;
+  // get all courses with deleteAt : null -> lấy ra course với điều kiện deleteAt === null
   async showHome(req, res) {
     try {
       let data = await myCourses

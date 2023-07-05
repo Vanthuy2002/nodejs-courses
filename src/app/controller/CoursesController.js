@@ -27,6 +27,18 @@ class CoursesController {
     await Courses.updateOne({ _id: req.params.id }, req.body);
     res.redirect('/me/dashboard');
   }
+
+  // DELETE method
+  async deleteAction(req, res) {
+    await Courses.delete({ _id: req.params.id });
+    res.redirect('back');
+  }
+
+  // PATCH -> RESTORE method
+  async restoreAction(req, res){
+    await Courses.restore({_id: req.params.id});
+    res.redirect("/me/dashboard")
+  }
 }
 
 module.exports = new CoursesController();

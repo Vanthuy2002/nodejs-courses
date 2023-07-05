@@ -8,6 +8,10 @@ routesOfCourse.get('/:id/update', courseCtrl.showUpdatePage);
 
 routesOfCourse.put('/:id', courseCtrl.updateAction);
 
+routesOfCourse.patch('/:id/restore', courseCtrl.restoreAction);
+
+routesOfCourse.delete('/:id', courseCtrl.deleteAction);
+
 routesOfCourse.post('/store', courseCtrl.PostCreatePage);
 
 routesOfCourse.get('/:slug', courseCtrl.showDetails);
