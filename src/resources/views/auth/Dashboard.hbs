@@ -2,9 +2,26 @@
   <div class='relative overflow-x-auto shadow-md sm:rounded-lg'>
     <table class='w-full text-sm text-left text-gray-500'>
       <div class='p-5 bg-white flex items-center justify-between'>
+        <div class="flex-1">
         <p class='text-lg font-semibold text-left text-gray-900'>
           My Courses
         </p>
+
+        {{!-- action --}}
+        <div class="flex items-center mt-4 gap-3">
+          <input id="choose-all" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+          <label for="choose-all" class="text-md shrink-0 font-medium select-none"> Select All</label>
+        </div>
+          <section class="flex items-center gap-3 mt-4">
+            <select id="actions" class="max-w-[50%] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <option selected>Choose an action</option>
+          <option value="delete">Deleted</option>
+          </select>
+          <button disabled id="btn-submit" type="button" class="disabled:opacity-50 text-white min-w-[120px] bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5">Add Change</button>
+          </section>
+        </div>
+        {{!-- actions --}}
+
         <a href='/me/trash' class='px-3 relative inline-block'>
           <img class='w-10 h-7' src='/img/trash.svg' alt='trash' />
            <span class="w-5 h-5 leading-5 bg-red-400 absolute top-[-5px] right-[10px] rounded-full text-white text-center">{{docRemoves}}</span>
@@ -12,6 +29,7 @@
       </div>
       <thead class='text-xs text-gray-700 uppercase bg-gray-50'>
         <tr>
+          <th scope='col' class='px-6 py-3'></th>
           <th scope='col' class='px-6 py-3'>
             #
           </th>
@@ -35,6 +53,9 @@
       <tbody>
         {{#each coursesData}}
           <tr class='bg-white border-b hover:bg-gray-200'>
+            <td class='px-6 py-4'>
+              <input type="checkbox" value="{{this._id}}" name="coursesID[]" class="w-4 h-4 text-blue-600 item">
+            </td>
             <td
               scope='row'
               class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'
@@ -156,9 +177,34 @@
 <form name='delete-form' method='post' hidden></form>
 
 <script>
+  document.addEventListener("DOMContentLoaded",() => {
+  //DOM
   const remover = document.querySelectorAll(".remover"); 
   const confirmed = document.getElementById("confirm"); 
   const formDel = document.forms['delete-form']; 
+  const checkAll = $("#choose-all");
+
+  //using jsquery ///////////////////////////
+  const checkItems = $("input[name='coursesID[]']");
+  const btnSubmit = $(".btn-submit");
+
+  //handle all checkbox
+  checkAll.change(function() {
+    let isChecked = $(this).prop("checked");
+    checkItems.prop("checked", isChecked);
+  });
+
+  //handle with checkitems
+  checkItems.change(function() {
+    let isAllChecked = checkItems.length === $("input[name='coursesID[]']:checked").length;
+    checkAll.prop("checked", isAllChecked);
+  });
+
+  //render buttons
+  const renderExcuseBtn = () => {
+    
+  }
+
   let courseId = ''; 
   remover.forEach((btn) => btn.onclick = () => { 
     let id = btn.dataset.idCourse; 
@@ -168,5 +214,6 @@
     formDel.action =`/courses/${courseId}?_method=DELETE`; 
     formDel.submit();
   }
+  })
 
 </script>
