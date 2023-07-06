@@ -17,7 +17,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// override method
+// override method -> put patch deleted
 app.use(methodOverride('_method'));
 
 //template enginer
@@ -25,6 +25,7 @@ const hbs = exphbs.create({
   extname: 'hbs',
   helpers: { sumIndex: (a, b) => a + b },
 });
+
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));

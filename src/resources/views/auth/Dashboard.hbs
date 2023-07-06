@@ -5,8 +5,9 @@
         <p class='text-lg font-semibold text-left text-gray-900'>
           My Courses
         </p>
-        <a href='/me/trash' class='px-3'>
-          <img class='w-8 h-8' src='/img/trash.svg' alt='trash' />
+        <a href='/me/trash' class='px-3 relative inline-block'>
+          <img class='w-10 h-7' src='/img/trash.svg' alt='trash' />
+           <span class="w-5 h-5 leading-5 bg-red-400 absolute top-[-5px] right-[10px] rounded-full text-white text-center">{{docRemoves}}</span>
         </a>
       </div>
       <thead class='text-xs text-gray-700 uppercase bg-gray-50'>
@@ -155,11 +156,17 @@
 <form name='delete-form' method='post' hidden></form>
 
 <script>
-  const remover = document.querySelectorAll(".remover"); const confirmed =
-  document.getElementById("confirm"); const formDel =
-  document.forms['delete-form']; let courseId = ''; remover.forEach((btn) =>
-  btn.onclick = () => { let id = btn.dataset.idCourse; courseId = id; })
-  confirmed.onclick = () => { formDel.action =
-  `/courses/${courseId}?_method=DELETE`; formDel.submit(); }
+  const remover = document.querySelectorAll(".remover"); 
+  const confirmed = document.getElementById("confirm"); 
+  const formDel = document.forms['delete-form']; 
+  let courseId = ''; 
+  remover.forEach((btn) => btn.onclick = () => { 
+    let id = btn.dataset.idCourse; 
+    courseId = id; 
+  })
+  confirmed.onclick = () => { 
+    formDel.action =`/courses/${courseId}?_method=DELETE`; 
+    formDel.submit();
+  }
 
 </script>
