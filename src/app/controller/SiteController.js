@@ -9,7 +9,7 @@ class SiteController {
         .find({}, 'name desc img createAt updateAt slug')
         .lean()
         .exec();
-      res.render('home', { data });
+      res.render('page/home', { data });
     } catch (error) {
       console.log(error);
     }
@@ -17,7 +17,7 @@ class SiteController {
 
   // render search page
   showSearch(req, res) {
-    res.render('search');
+    res.render('page/search');
     console.log(req.body);
   }
 }

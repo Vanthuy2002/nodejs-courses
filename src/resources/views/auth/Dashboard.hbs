@@ -1,7 +1,8 @@
-<div class='max-w-5xl mx-auto my-10'>
+<form name="container-form" method="post" action="/courses/choose" class='max-w-5xl mx-auto my-10'>
   <div class='relative overflow-x-auto shadow-md sm:rounded-lg'>
     <table class='w-full text-sm text-left text-gray-500'>
       <div class='p-5 bg-white flex items-center justify-between'>
+        
         <div class="flex-1">
         <p class='text-lg font-semibold text-left text-gray-900'>
           My Courses
@@ -13,11 +14,11 @@
           <label for="choose-all" class="text-md shrink-0 font-medium select-none"> Select All</label>
         </div>
           <section class="flex items-center gap-3 mt-4">
-            <select id="actions" class="max-w-[50%] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-          <option selected>Choose an action</option>
-          <option value="delete">Deleted</option>
+            <select id="actions" name="actions" class="max-w-[50%] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+              <option value="" selected>Choose an action</option>
+              <option value="delete">Deleted</option>
           </select>
-          <button disabled id="btn-submit" type="button" class="disabled:opacity-50 text-white min-w-[120px] bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5">Add Change</button>
+          <button disabled id="btn-submit" class="disabled:opacity-50 text-white min-w-[120px] bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5">Add Change</button>
           </section>
         </div>
         {{!-- actions --}}
@@ -96,7 +97,7 @@
             </td>
           </tr>
         {{else}}
-          <td colspan='6' class='bg-white border-b'>
+          <td colspan='7' class='bg-white border-b'>
             <span
               class='block h-[calc(100vh-130px)] mt-10 text-center font-medium text-black text-2xl'
             >Your course will appear here</span>
@@ -105,7 +106,7 @@
       </tbody>
     </table>
   </div>
-</div>
+</form>
 {{! modal }}
 
 <section
@@ -182,28 +183,46 @@
   const remover = document.querySelectorAll(".remover"); 
   const confirmed = document.getElementById("confirm"); 
   const formDel = document.forms['delete-form']; 
-  const checkAll = $("#choose-all");
 
-  //using jsquery ///////////////////////////
+  //using jsquery //
+  const checkAll = $("#choose-all");
   const checkItems = $("input[name='coursesID[]']");
-  const btnSubmit = $(".btn-submit");
+  const btnSubmit = $("#btn-submit");
+  const containerForm = $("form[name='container-form']");
 
   //handle all checkbox
   checkAll.change(function() {
     let isChecked = $(this).prop("checked");
     checkItems.prop("checked", isChecked);
+    renderBtn();
   });
 
   //handle with checkitems
   checkItems.change(function() {
     let isAllChecked = checkItems.length === $("input[name='coursesID[]']:checked").length;
     checkAll.prop("checked", isAllChecked);
+    renderBtn();
   });
 
   //render buttons
-  const renderExcuseBtn = () => {
-    
+  const renderBtn = () => {
+    const checkedCount = $("input[name='coursesID[]']:checked").length;
+    if(checkedCount > 0) {
+      btnSubmit.removeAttr("disabled");
+    }else{
+      btnSubmit.prop("disabled", true);
+    }
   }
+
+  //btn clicked
+  containerForm.on("submit", function(e){
+    let isSbmitable = !btnSubmit.attr("disabled");
+    if(!isSbmitable){
+      e.preventDefault();
+    }
+  });
+  //isSubmitable will check if button has NOT attribute 'disabled' -> submit form
+  // if button has attribute 'disabled' -> e.preventDefault();
 
   let courseId = ''; 
   remover.forEach((btn) => btn.onclick = () => { 

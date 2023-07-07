@@ -8,11 +8,15 @@ routesOfCourse.get('/:id/update', courseCtrl.showUpdatePage);
 
 routesOfCourse.put('/:id', courseCtrl.updateAction);
 
+routesOfCourse.delete('/:id', courseCtrl.deleteAction);
+
 routesOfCourse.patch('/:id/restore', courseCtrl.restoreAction);
 
 routesOfCourse.delete('/:id/destroy', courseCtrl.permanentlyDestroy);
 
-routesOfCourse.delete('/:id', courseCtrl.deleteAction);
+routesOfCourse.post('/choose', courseCtrl.chooseAlltoSubmit);
+
+routesOfCourse.post('/chooseAllToAction', courseCtrl.chooseToReStoreOrRemove);
 
 routesOfCourse.post('/store', courseCtrl.PostCreatePage);
 

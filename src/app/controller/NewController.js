@@ -1,12 +1,12 @@
 class NewsController {
   // render page news
   index(req, res) {
-    res.render('news');
+    res.render('page/news');
   }
 
   // render details pages
   showDetails(req, res) {
-    res.render('details');
+    res.render('page/details');
   }
 }
 

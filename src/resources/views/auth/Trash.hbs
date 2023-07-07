@@ -1,17 +1,37 @@
-<div class='max-w-5xl mx-auto my-10'>
+<form method="post" action="/courses/chooseAllToAction" name="trash-form" class='max-w-5xl mx-auto my-10'>
   <div class='relative overflow-x-auto shadow-md sm:rounded-lg'>
     <table class='w-full text-sm text-left text-gray-500'>
       <div class='p-5 bg-white flex items-center justify-between'>
-        <p class='text-lg font-semibold text-left text-gray-900'>
-          My Trash
-        </p>
+
+        {{!-- action --}}
+        <div class="flex-1">
+          <p class='text-lg font-semibold text-left text-gray-900'>
+            My Trash
+          </p>
+
+          <div class="flex items-center mt-4 gap-3">
+          <input id="choose-all" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+          <label for="choose-all" class="text-md shrink-0 font-medium select-none"> Select All</label>
+        </div>
+          <section class="flex items-center gap-3 mt-4">
+            <select id="actions" name="actions" class="max-w-[50%] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+              <option value="" selected>Choose an action</option>
+              <option value="destroy">Destroy</option>
+              <option value="restore">Restore</option>
+          </select>
+          <button disabled id="btn-submit" class="disabled:opacity-50 text-white min-w-[120px] bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5">Add Change</button>
+          </section>
+          {{!-- end action --}}
+        </div>
         <a href='/me/dashboard' class='px-3 relative'>
           <img class='w-8 h-8' src='/img/dash.svg' alt='dashboard' />
           <span class="w-5 h-5 leading-5 bg-red-400 absolute top-[-5px] right-[5px] rounded-full text-white text-center">{{countInDashBoard}}</span>
         </a>
+        </div>
       </div>
       <thead class='text-xs text-gray-700 uppercase bg-gray-50'>
         <tr>
+          <th scope='col' class='px-6 py-3'></th>
           <th scope='col' class='px-6 py-3'>
             #
           </th>
@@ -35,6 +55,9 @@
       <tbody>
         {{#each coursesFilter}}
           <tr class='bg-white border-b hover:bg-gray-200'>
+             <td class='px-6 py-4'>
+             <input type="checkbox" value='{{this._id}}' name="coursesRemove[]" class="w-4 h-4 text-blue-600 item">
+            </td>
             <td
               scope='row'
               class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'
@@ -73,7 +96,7 @@
             </td>
           </tr>
         {{else}}
-          <td colspan='6' class='bg-white border-b'>
+          <td colspan='7' class='bg-white border-b'>
             <span
               class='block h-[calc(100vh-130px)] mt-10 text-center font-medium text-black text-2xl'
             >Your course remove will appear here</span>
@@ -82,10 +105,12 @@
       </tbody>
     </table>
   </div>
-</div>
+</form>
+
+{{!-- form restore --}}
+<form method="post" name="restore-form" hidden></form>
 
 {{! modal }}
-
 <section
   id='toggle'
   tabindex='-1'
@@ -151,9 +176,8 @@
   </div>
 </section>
 
-<form method='post' hidden name='restore-form'></form>
-
 <script>
+  document.addEventListener("DOMContentLoaded", function(){
   //button
   const restoreBtns = document.querySelectorAll(".restore");
   const destroysBtn = document.querySelectorAll(".destroys"); 
@@ -161,8 +185,47 @@
 
   //form
   const formRestore = document.forms['restore-form']; 
+  console.log(formRestore)
 
-  //id values
+  //handle check all
+  const checkAll = $("#choose-all");
+  const checkItems = $("input[name='coursesRemove[]']");
+  const btnSubmit = $("#btn-submit");
+  const trashForm = $("form[name='trash-form']")
+
+  //handle all checkbox
+  checkAll.change(function() {
+    let isChecked = $(this).prop("checked");
+    checkItems.prop("checked", isChecked);
+    renderBtn();
+  });
+
+  //handle with checkitems
+  checkItems.change(function() {
+    let isAllChecked = checkItems.length === $("input[name='coursesRemove[]']:checked").length;
+    checkAll.prop("checked", isAllChecked);
+    renderBtn();
+  });
+
+  //render buttons
+  const renderBtn = () => {
+    const checkedCount = $("input[name='coursesRemove[]']:checked").length;
+    if(checkedCount > 0) {
+      btnSubmit.removeAttr("disabled");
+    }else{
+      btnSubmit.prop("disabled", true);
+    }
+  }
+
+  //btn clicked
+  trashForm.on("submit", function(e){
+    let isSbmitable = !btnSubmit.attr("disabled"); //if button NOT have attr 'disabled'
+    if(!isSbmitable){ // if button has attr 'disabled'
+      e.preventDefault();
+    }
+  });
+
+  //handle remove and restore not use checkbox
   let id;
   restoreBtns.forEach(btn => { 
     btn.onclick = () => { 
@@ -172,14 +235,15 @@
     }; 
   });
 
+  confirmBtn.onclick = () => {
+    formRestore.action = `/courses/${id}/destroy?_method=DELETE`;
+    formRestore.submit();
+  }
+
   destroysBtn.forEach(btn => {
     btn.onclick = () => {
       id = btn.dataset.idCourse;
     }
   });
-
-  confirmBtn.onclick = () => {
-    formRestore.action = `/courses/${id}/destroy?_method=DELETE`;
-    formRestore.submit();
-  }
+})
 </script>
