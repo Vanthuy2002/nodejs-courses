@@ -25,7 +25,7 @@
 
         <a href='/me/trash' class='px-3 relative inline-block'>
           <img class='w-10 h-7' src='/img/trash.svg' alt='trash' />
-           <span class="w-5 h-5 leading-5 bg-red-400 absolute top-[-5px] right-[10px] rounded-full text-white text-center">{{docRemoves}}</span>
+           <span class="w-5 h-5 leading-5 bg-red-400 absolute top-[-5px] right-[10px] rounded-full text-white text-center">{{countDeleted}}</span>
         </a>
       </div>
       <thead class='text-xs text-gray-700 uppercase bg-gray-50'>
@@ -37,8 +37,11 @@
           <th scope='col' class='px-6 py-3'>
             ID
           </th>
-          <th scope='col' class='px-6 py-3'>
-            Name
+          <th scope='col' class='px-6 py-3 flex gap-2 items-center'>
+            <span>Name</span>
+            <a href="/me/dashboard?_sort&column=name&type=desc">
+              <img class="w-6 h-6" src="/img/elevator.svg" alt="">
+            </a>
           </th>
           <th scope='col' class='px-6 py-3'>
             Image
@@ -178,61 +181,65 @@
 <form name='delete-form' method='post' hidden></form>
 
 <script>
-  document.addEventListener("DOMContentLoaded",() => {
+  document.addEventListener('DOMContentLoaded', () => {
   //DOM
-  const remover = document.querySelectorAll(".remover"); 
-  const confirmed = document.getElementById("confirm"); 
-  const formDel = document.forms['delete-form']; 
+  const remover = document.querySelectorAll('.remover');
+  const confirmed = document.getElementById('confirm');
+  const formDel = document.forms['delete-form'];
 
   //using jsquery //
-  const checkAll = $("#choose-all");
+  const checkAll = $('#choose-all');
   const checkItems = $("input[name='coursesID[]']");
-  const btnSubmit = $("#btn-submit");
+  const btnSubmit = $('#btn-submit');
   const containerForm = $("form[name='container-form']");
 
   //handle all checkbox
-  checkAll.change(function() {
-    let isChecked = $(this).prop("checked");
-    checkItems.prop("checked", isChecked);
+  checkAll.change(function () {
+    let isChecked = $(this).prop('checked');
+    checkItems.prop('checked', isChecked);
     renderBtn();
   });
 
   //handle with checkitems
-  checkItems.change(function() {
-    let isAllChecked = checkItems.length === $("input[name='coursesID[]']:checked").length;
-    checkAll.prop("checked", isAllChecked);
+  checkItems.change(function () {
+    let isAllChecked =
+      checkItems.length === $("input[name='coursesID[]']:checked").length;
+    checkAll.prop('checked', isAllChecked);
     renderBtn();
   });
 
   //render buttons
   const renderBtn = () => {
     const checkedCount = $("input[name='coursesID[]']:checked").length;
-    if(checkedCount > 0) {
-      btnSubmit.removeAttr("disabled");
-    }else{
-      btnSubmit.prop("disabled", true);
+    if (checkedCount > 0) {
+      btnSubmit.removeAttr('disabled');
+    } else {
+      btnSubmit.prop('disabled', true);
     }
-  }
+  };
 
   //btn clicked
-  containerForm.on("submit", function(e){
-    let isSbmitable = !btnSubmit.attr("disabled");
-    if(!isSbmitable){
+  containerForm.on('submit', function (e) {
+    let isSbmitable = !btnSubmit.attr('disabled');
+    if (!isSbmitable) {
       e.preventDefault();
     }
   });
   //isSubmitable will check if button has NOT attribute 'disabled' -> submit form
   // if button has attribute 'disabled' -> e.preventDefault();
 
-  let courseId = ''; 
-  remover.forEach((btn) => btn.onclick = () => { 
-    let id = btn.dataset.idCourse; 
-    courseId = id; 
-  })
-  confirmed.onclick = () => { 
-    formDel.action =`/courses/${courseId}?_method=DELETE`; 
+  let courseId = '';
+  remover.forEach(
+    (btn) =>
+      (btn.onclick = () => {
+        let id = btn.dataset.idCourse;
+        courseId = id;
+      })
+  );
+  confirmed.onclick = () => {
+    formDel.action = `/courses/${courseId}?_method=DELETE`;
     formDel.submit();
-  }
-  })
+  };
+});
 
 </script>

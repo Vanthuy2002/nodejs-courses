@@ -3,15 +3,28 @@ const { mutilMongooseObject } = require('../../utils/mogooseConfig');
 
 class AuthController {
   // get courses not deleted
-  async showDashboard(req, res) {
+  async showDashboard(req, res, next) {
     try {
-      const coursesData = await Courses.find({}).lean().exec();
-      const allDocs = await Courses.countDocumentsWithDeleted();
-      const docInDB = await Courses.countDocuments();
-      const docRemoves = +(allDocs - docInDB);
-      res.render('auth/Dashboard', { coursesData, docRemoves });
+      let coursesQuery = Courses.find({});
+
+      if (req.query.hasOwnProperty('_sort')) {
+        coursesQuery = coursesQuery.sort({
+          [req.query.column]: req.query.type,
+        });
+      }
+
+      const [coursesData, docInDB, allDoc] = await Promise.all([
+        coursesQuery,
+        Courses.countDocuments(),
+        Courses.countDocumentsWithDeleted(),
+      ]);
+
+      res.render('auth/Dashboard', {
+        coursesData: mutilMongooseObject(coursesData),
+        countDeleted: +(allDoc - docInDB),
+      });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
